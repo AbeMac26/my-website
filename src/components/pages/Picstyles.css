@@ -14,13 +14,19 @@
     display: flex;
     -ms-flex-wrap: wrap; /* IE 10 */
     flex-wrap: wrap;
-    padding: 0 4px;
+    padding: 0 2px;
   }
    /* Create two equal columns that floats next to each other */
    .piccolumn {
     -ms-flex: 50%; /* IE 10 */
     flex: 50%;
-    padding: 0 4px;
+    padding: 0 2px;
+  }
+  .piccolumn #pic-btn{
+    padding: none;
+    border: none;
+    background-color: white;
+
   }
   
   .piccolumn img {
@@ -64,4 +70,7 @@
     display: flex;
     justify-content: center;
   } 
- 
+/*.popup-inner img{
+max-width: 100%;
+position:inherit;
+}*/

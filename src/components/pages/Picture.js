@@ -4,6 +4,7 @@ import "./Picstyles.css";
 import React,{useState, useEffect, useMemo} from "react";
 import Pagination from '../paginate/MyPagination';
 import axios from 'axios';
+import Popup from '../popups/Popup';
 import sq1 from '../../assets/images/sq1.png';
 import sq2 from '../../assets/images/sq2.png';
 import sq4 from '../../assets/images/sq5.png';
@@ -40,10 +41,13 @@ const Picture = () =>  {
     const [images, setimages] = useState([]);
 
     const [currentPage, setCurrentPage] = useState(1);
+    const [buttonPopup, setButtonPopup] = useState(false);
+    const [imgPopup,setImgPopup] =useState();
 
+  
 
     useEffect(() => {
-        axios.get('http://192.168.68.82:8080/api/pictures')
+        axios.get('http://206.251.47.48:8080/api/pictures')
         .then(res => {
             setimages(res.data);
         }).catch(error => {
@@ -56,7 +60,7 @@ const Picture = () =>  {
         const lastPageIndex = firstPageIndex + PageSize;
         return images.slice(firstPageIndex, lastPageIndex);
     }, [images , currentPage]); 
-
+  
     return  ( 
             <div className="picbody"> 
                 <h1>Pictures</h1>  
@@ -79,30 +83,41 @@ const Picture = () =>  {
                      
                     <div className="piccolumn">  
                     {currentTableData.slice(0, 4).map(pic => ( 
-                            <img src={pic.url} key={pic.name} alt={pic.name} style={imgStyle}></img>
-                    ))}       
+                        <button id="pic-btn" onClick={()=>{setButtonPopup(true);setImgPopup(pic.url);}}> 
+                            <img src={pic.url} key={pic.id} alt={pic.name} style={imgStyle}></img>
+                        </button>
+                    ))}      
                     </div>
                   
                     
                     <div className="piccolumn">
                     {currentTableData.slice(4, 8).map(pic => ( 
-                        <img src={pic.url} key={pic.name} alt={pic.name} style={imgStyle}></img>
+                        <button id="pic-btn" onClick={()=>{setButtonPopup(true);setImgPopup(pic.url);}}>
+                            <img src={pic.url} key={pic.id} alt={pic.name} style={imgStyle}></img>
+                        </button>
                     ))}     
                     </div> 
                     
                     <div className="piccolumn" >
                     {currentTableData.slice(8,12).map(pic => ( 
-                        <img src={pic.url} key={pic.name} alt={pic.name} style={imgStyle}></img>
+                        <button id="pic-btn" onClick={()=>{setButtonPopup(true);setImgPopup(pic.url);}}>
+                            <img src={pic.url} key={pic.id} alt={pic.name} style={imgStyle}></img>
+                        </button>
                     ))}
                     </div> 
                     
                     <div className="piccolumn" >
                     {currentTableData.slice(12,currentTableData.length).map(pic => ( 
-                        <img src={pic.url} key={pic.name} alt={pic.name} style={imgStyle}></img>
+                        <button id="pic-btn" onClick={()=>{setButtonPopup(true);setImgPopup(pic.url);}}>
+                            <img src={pic.url} key={pic.id} alt={pic.name} style={imgStyle}></img>
+                        </button>
                     ))}
                     </div> 
                      
                 </div>  
+                <Popup className="popup" trigger={buttonPopup} setTrigger={setButtonPopup}>
+                    <img src={imgPopup} alt=""></img>
+                </Popup>
             </div>   
     )   
 };
